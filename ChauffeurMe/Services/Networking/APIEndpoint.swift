@@ -9,6 +9,7 @@ import Foundation
 
 enum APIEndpoint {
     case nearestRings(latitude: Float, longitude: Float, radius: Float)
+    case book(request: BookRequest)
 }
 
 extension APIEndpoint {
@@ -16,6 +17,9 @@ extension APIEndpoint {
         switch self {
         case .nearestRings:
             return .get
+            
+        case .book:
+            return .post
         }
     }
     
@@ -23,6 +27,9 @@ extension APIEndpoint {
         switch self {
         case .nearestRings:
             return "/rings/nearest"
+            
+        case .book:
+            return "/rides"
         }
     }
     
@@ -34,6 +41,9 @@ extension APIEndpoint {
                 "longitude": String(longitude),
                 "radius": String(radius),
             ]
+            
+        case .book:
+            return [:]
         }
     }
 }
