@@ -7,23 +7,20 @@
 
 import Foundation
 
-enum HTTPError: Error {
-    case statusCodeNotInSuccessRange(_ statusCode: Int)
-    case emptyResponse
-    case emptyData
-}
-
 enum HTTP {
     private static let jsonDecoder = JSONDecoder()
+    private static let contentTypeHeaderKey = "Content-Type"
     
     typealias DoRequestCompletionHandler<T> = (_ result: Result<T, Error>) -> Void
     
     /// Executes the `URLRequest` in the `URLSession`
     /// and passes the decoded object to the `completionHandler` closure.
     static func doRequest<T: Decodable>(
-        urlRequest: URLRequest,
+        httpRequest: HTTPRequest,
         completionHandler: @escaping DoRequestCompletionHandler<T>
     ) {
+        let urlRequest = urlRequest(from: httpRequest)
+        
         let task = URLSession.shared.dataTask(
             with: urlRequest
         ) { (data,  response, error) in
@@ -61,6 +58,23 @@ enum HTTP {
         }
         
         task.resume()
+    }
+    
+    private static func urlRequest(
+        from httpRequest: HTTPRequest
+    ) -> URLRequest {
+        var urlRequest = URLRequest(url: httpRequest.url)
+        urlRequest.httpMethod = httpRequest.method.rawValue
+        urlRequest.httpBody = httpRequest.body
+        
+        if httpRequest.body != nil {
+            urlRequest.addValue(
+                HTTPContentType.applicationJson.rawValue,
+                forHTTPHeaderField: contentTypeHeaderKey
+            )
+        }
+        
+        return urlRequest
     }
     
     private static func decode<T: Decodable>(data: Data, into: T.Type) -> Result<T, Error> {
