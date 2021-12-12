@@ -2,7 +2,9 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSLocationUsageDescription</key>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Your location information will be used to find nearest rings around you.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Your location information will be used to find nearest rings around you.</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
