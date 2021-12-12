@@ -22,9 +22,10 @@
 		C307B811276599D4004BC681 /* APIEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C307B810276599D4004BC681 /* APIEndpoint.swift */; };
 		C307B81327659CC8004BC681 /* HTTPContentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C307B81227659CC8004BC681 /* HTTPContentType.swift */; };
 		C307B81527659D6C004BC681 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C307B81427659D6C004BC681 /* APIError.swift */; };
-		C307B8192765A073004BC681 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = C307B8182765A073004BC681 /* Location.swift */; };
-		C307B81B2765A1BA004BC681 /* LocationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C307B81A2765A1BA004BC681 /* LocationDelegate.swift */; };
+		C307B8192765A073004BC681 /* LocationWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C307B8182765A073004BC681 /* LocationWatcher.swift */; };
+		C307B81B2765A1BA004BC681 /* LocationWatcherDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C307B81A2765A1BA004BC681 /* LocationWatcherDelegate.swift */; };
 		C307B81E2765A306004BC681 /* Threads.swift in Sources */ = {isa = PBXBuildFile; fileRef = C307B81D2765A306004BC681 /* Threads.swift */; };
+		C307B8202765B3CC004BC681 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = C307B81F2765B3CC004BC681 /* Location.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,9 +46,10 @@
 		C307B810276599D4004BC681 /* APIEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoint.swift; sourceTree = "<group>"; };
 		C307B81227659CC8004BC681 /* HTTPContentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPContentType.swift; sourceTree = "<group>"; };
 		C307B81427659D6C004BC681 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
-		C307B8182765A073004BC681 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
-		C307B81A2765A1BA004BC681 /* LocationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDelegate.swift; sourceTree = "<group>"; };
+		C307B8182765A073004BC681 /* LocationWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationWatcher.swift; sourceTree = "<group>"; };
+		C307B81A2765A1BA004BC681 /* LocationWatcherDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationWatcherDelegate.swift; sourceTree = "<group>"; };
 		C307B81D2765A306004BC681 /* Threads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Threads.swift; sourceTree = "<group>"; };
+		C307B81F2765B3CC004BC681 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,8 +163,9 @@
 		C307B8172765A06A004BC681 /* Location */ = {
 			isa = PBXGroup;
 			children = (
-				C307B8182765A073004BC681 /* Location.swift */,
-				C307B81A2765A1BA004BC681 /* LocationDelegate.swift */,
+				C307B8182765A073004BC681 /* LocationWatcher.swift */,
+				C307B81A2765A1BA004BC681 /* LocationWatcherDelegate.swift */,
+				C307B81F2765B3CC004BC681 /* Location.swift */,
 			);
 			path = Location;
 			sourceTree = "<group>";
@@ -248,12 +251,13 @@
 			files = (
 				C307B80227658DC4004BC681 /* HTTP.swift in Sources */,
 				C307B80F27659870004BC681 /* HTTPError.swift in Sources */,
+				C307B8202765B3CC004BC681 /* Location.swift in Sources */,
 				C307B7EE27658ACB004BC681 /* MainViewController.swift in Sources */,
 				C307B80B27659854004BC681 /* HTTPMethod.swift in Sources */,
 				C307B7EA27658ACB004BC681 /* AppDelegate.swift in Sources */,
 				C307B81527659D6C004BC681 /* APIError.swift in Sources */,
-				C307B8192765A073004BC681 /* Location.swift in Sources */,
-				C307B81B2765A1BA004BC681 /* LocationDelegate.swift in Sources */,
+				C307B8192765A073004BC681 /* LocationWatcher.swift in Sources */,
+				C307B81B2765A1BA004BC681 /* LocationWatcherDelegate.swift in Sources */,
 				C307B81327659CC8004BC681 /* HTTPContentType.swift in Sources */,
 				C307B80027658CE0004BC681 /* NearestRing.swift in Sources */,
 				C307B81E2765A306004BC681 /* Threads.swift in Sources */,

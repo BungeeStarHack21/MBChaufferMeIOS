@@ -33,15 +33,19 @@ extension MainViewController {
 
 extension MainViewController {
     private func subscribeToLocation() {
-        Location.shared.delegate = self
+        LocationWatcher.shared.delegate = self
     }
 }
 
 // MARK: - Location Delegate
 
-extension MainViewController: LocationDelegate {
-    func locationUpdated(latitude: Float, longitude: Float) {
-        API.findNearestRings(by: latitude, and: longitude, radius: 0.5) { [weak self] result in
+extension MainViewController: LocationWatcherDelegate {
+    func locationUpdated(_ location: Location) {
+        API.findNearestRings(
+            by: location.latitude,
+            and: location.longitude,
+            radius: 0.5
+        ) { [weak self] result in
             guard let self = self else { return }
             
             switch result {
@@ -67,69 +71,84 @@ extension MainViewController {
     
     private func updateMapView() {
         Threads.runOnMainThread {
-            print(self.nearestRings)
-            
-            self.emre()
+            self.removeRings()
+            self.drawRings()
+            self.focusToUserIfLastIsPresent()
         }
     }
     
-    private func emre() {
-        let nodes = nearestRings.last?.nodes ?? []
-        
-        for (index, node) in nodes.enumerated() {
-            let nextNode: NearestRing.Node
-            
-            if index < nodes.count - 1 {
-                nextNode = nodes[index + 1]
-            } else {
-                // TODO: Do not force unwrap
-                nextNode = nodes.first!
-            }
-            
-            let request = MKDirections.Request()
-            request.source = .init(placemark: .init(coordinate: .init(latitude: .init(node.latitude), longitude: .init(node.longitude))))
-            request.destination = .init(placemark: .init(coordinate: .init(latitude: .init(nextNode.latitude), longitude: .init(nextNode.longitude))))
-            
-            request.transportType = .automobile
-            
-            let directions = MKDirections(request: request)
-            
-            directions.calculate { [weak self] response, error in
-                guard let response = response else { return }
+    private func removeRings() {
+        mapView.removeOverlays(mapView.overlays)
+    }
+    
+    private func drawRings() {
+        for (ringIndex, ring) in nearestRings.enumerated() {
+            for (nodeIndex, node) in ring.nodes.enumerated() {
+                let nextNode: NearestRing.Node
                 
-                let first = response.routes.first!
+                if nodeIndex < ring.nodes.count - 1 {
+                    nextNode = ring.nodes[nodeIndex + 1]
+                } else {
+                    nextNode = ring.nodes[0]
+                }
                 
-                self?.mapView.addOverlay(first.polyline)
-                self?.mapView.setVisibleMapRect(first.polyline.boundingMapRect, animated: true)
+                let request = MKDirections.Request()
+                request.source = .init(
+                    placemark: .init(
+                        coordinate: .init(
+                            latitude: .init(node.latitude),
+                            longitude: .init(node.longitude)
+                        )
+                    )
+                )
+                request.destination = .init(
+                    placemark: .init(
+                        coordinate: .init(
+                            latitude: .init(nextNode.latitude),
+                            longitude: .init(nextNode.longitude)
+                        )
+                    )
+                )
+                
+                request.transportType = .automobile
+                
+                let directions = MKDirections(request: request)
+                
+                directions.calculate { [weak self] response, error in
+                    guard let self = self, let response = response else { return }
+                    
+                    let first = response.routes.first!
+                    
+                    first.polyline.title = String(ringIndex)
+                    
+                    self.mapView.addOverlay(first.polyline)
+                }
             }
         }
-//        let request = MKDirections.Request()
-//        request.source = MKMapItem(placemark: MKPlacemark(coordinate: annotation1.coordinate, addressDictionary: nil))
-//        request.destination = MKMapItem(placemark: MKPlacemark(coordinate: annotation2.coordinate, addressDictionary: nil))
-//        request.requestsAlternateRoutes = true
-//        request.transportType = .automobile
-//
-//        let directions = MKDirections(request: request)
-//
-//        directions.calculateDirectionsWithCompletionHandler { [unowned self] response, error in
-//            guard let unwrappedResponse = response else { return }
-//
-//            if (unwrappedResponse.routes.count > 0) {
-//                self.mapView.addOverlay(unwrappedResponse.routes[0].polyline)
-//                self.mapView.setVisibleMapRect(unwrappedResponse.routes[0].polyline.boundingMapRect, animated: true)
-//            }
-//        }
+    }
+    
+    private func focusToUserIfLastIsPresent() {
+        guard let location = LocationWatcher.shared.last else {
+            return
+        }
+        
+        self.mapView.setRegion(.init(center: .init(latitude: Double(location.latitude), longitude: Double(location.longitude)), span: .init(latitudeDelta: 0.01, longitudeDelta: 0.01)), animated: true)
     }
 }
 
 // MARK: - Map View Delegate
 
 extension MainViewController: MKMapViewDelegate {
+    private static let colors: [UIColor] = [
+        .red, .green, .blue, .brown, .orange, .magenta
+    ]
+    
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-
+        let index = Int(overlay.title!!)!
+        
         let renderer = MKPolylineRenderer(overlay: overlay)
 
-        renderer.strokeColor = UIColor(red: 17.0/255.0, green: 147.0/255.0, blue: 255.0/255.0, alpha: 1)
+        renderer.strokeColor = Self.colors[index]
 
         renderer.lineWidth = 5.0
 
