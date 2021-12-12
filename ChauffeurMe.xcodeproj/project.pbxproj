@@ -26,6 +26,9 @@
 		C307B81B2765A1BA004BC681 /* LocationWatcherDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C307B81A2765A1BA004BC681 /* LocationWatcherDelegate.swift */; };
 		C307B81E2765A306004BC681 /* Threads.swift in Sources */ = {isa = PBXBuildFile; fileRef = C307B81D2765A306004BC681 /* Threads.swift */; };
 		C307B8202765B3CC004BC681 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = C307B81F2765B3CC004BC681 /* Location.swift */; };
+		C341C6AA2765E7DC00D42205 /* BookRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C341C6A92765E7DC00D42205 /* BookRequest.swift */; };
+		C341C6AC2765EB7D00D42205 /* BookResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = C341C6AB2765EB7D00D42205 /* BookResponse.swift */; };
+		C341C6B02765F92F00D42205 /* BookingSuccessfulViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C341C6AF2765F92F00D42205 /* BookingSuccessfulViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +53,9 @@
 		C307B81A2765A1BA004BC681 /* LocationWatcherDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationWatcherDelegate.swift; sourceTree = "<group>"; };
 		C307B81D2765A306004BC681 /* Threads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Threads.swift; sourceTree = "<group>"; };
 		C307B81F2765B3CC004BC681 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		C341C6A92765E7DC00D42205 /* BookRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookRequest.swift; sourceTree = "<group>"; };
+		C341C6AB2765EB7D00D42205 /* BookResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookResponse.swift; sourceTree = "<group>"; };
+		C341C6AF2765F92F00D42205 /* BookingSuccessfulViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingSuccessfulViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,7 +113,8 @@
 		C307B7FE27658C9B004BC681 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				C307B7FF27658CE0004BC681 /* NearestRing.swift */,
+				C341C6A72765E7C700D42205 /* Request */,
+				C341C6A82765E7CC00D42205 /* Response */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -126,6 +133,7 @@
 			isa = PBXGroup;
 			children = (
 				C307B805276591A7004BC681 /* Main */,
+				C341C6AE2765F91700D42205 /* Booking Successful */,
 				C307B7EF27658ACB004BC681 /* Main.storyboard */,
 			);
 			path = Screens;
@@ -178,6 +186,31 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
+		C341C6A72765E7C700D42205 /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				C341C6A92765E7DC00D42205 /* BookRequest.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		C341C6A82765E7CC00D42205 /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				C307B7FF27658CE0004BC681 /* NearestRing.swift */,
+				C341C6AB2765EB7D00D42205 /* BookResponse.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
+		C341C6AE2765F91700D42205 /* Booking Successful */ = {
+			isa = PBXGroup;
+			children = (
+				C341C6AF2765F92F00D42205 /* BookingSuccessfulViewController.swift */,
+			);
+			path = "Booking Successful";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -194,6 +227,8 @@
 			dependencies = (
 			);
 			name = ChauffeurMe;
+			packageProductDependencies = (
+			);
 			productName = ChauffeurMe;
 			productReference = C307B7E627658ACB004BC681 /* ChauffeurMe.app */;
 			productType = "com.apple.product-type.application";
@@ -222,6 +257,8 @@
 				Base,
 			);
 			mainGroup = C307B7DD27658ACB004BC681;
+			packageReferences = (
+			);
 			productRefGroup = C307B7E727658ACB004BC681 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -254,16 +291,19 @@
 				C307B8202765B3CC004BC681 /* Location.swift in Sources */,
 				C307B7EE27658ACB004BC681 /* MainViewController.swift in Sources */,
 				C307B80B27659854004BC681 /* HTTPMethod.swift in Sources */,
+				C341C6AC2765EB7D00D42205 /* BookResponse.swift in Sources */,
 				C307B7EA27658ACB004BC681 /* AppDelegate.swift in Sources */,
 				C307B81527659D6C004BC681 /* APIError.swift in Sources */,
 				C307B8192765A073004BC681 /* LocationWatcher.swift in Sources */,
 				C307B81B2765A1BA004BC681 /* LocationWatcherDelegate.swift in Sources */,
 				C307B81327659CC8004BC681 /* HTTPContentType.swift in Sources */,
 				C307B80027658CE0004BC681 /* NearestRing.swift in Sources */,
+				C341C6AA2765E7DC00D42205 /* BookRequest.swift in Sources */,
 				C307B81E2765A306004BC681 /* Threads.swift in Sources */,
 				C307B80D2765985D004BC681 /* HTTPRequest.swift in Sources */,
 				C307B809276597A1004BC681 /* API.swift in Sources */,
 				C307B7EC27658ACB004BC681 /* SceneDelegate.swift in Sources */,
+				C341C6B02765F92F00D42205 /* BookingSuccessfulViewController.swift in Sources */,
 				C307B811276599D4004BC681 /* APIEndpoint.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -10,22 +10,31 @@ import MapKit
 
 class MainViewController: UIViewController {
     @IBOutlet private weak var mapView: MKMapView!
+    @IBOutlet private weak var scrollView: UIScrollView!
+    @IBOutlet private weak var seatCountLabel: UILabel!
     
     private var nearestRings: [NearestRing] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setCenterView()
         subscribeToLocation()
         configureMapView()
+        LocationWatcher.shared.fetch()
     }
 }
 
-// MARK: - Nearest Rings
+// MARK: - Navigation Item
 
 extension MainViewController {
-    private func fetchNearestRings() {
+    private func setCenterView() {
+        let image = UIImage(named: "Logo")
         
+        let imageView = UIImageView(image: image)
+        imageView.frame = .init(x: 0, y: 0, width: 0, height: 0)
+        
+        navigationItem.titleView = imageView
     }
 }
 
@@ -44,7 +53,7 @@ extension MainViewController: LocationWatcherDelegate {
         API.findNearestRings(
             by: location.latitude,
             and: location.longitude,
-            radius: 0.5
+            radius: 10
         ) { [weak self] result in
             guard let self = self else { return }
             
@@ -140,19 +149,63 @@ extension MainViewController {
 
 extension MainViewController: MKMapViewDelegate {
     private static let colors: [UIColor] = [
-        .red, .green, .blue, .brown, .orange, .magenta
+        .init(red: 202 / 255, green: 220 / 255, blue: 245 / 255, alpha: 1),
+        .init(red: 160 / 255, green: 70 / 255, blue: 160 / 255, alpha: 1),
+        .init(red: 164 / 255, green: 117 / 255, blue: 86 / 255, alpha: 1)
     ]
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let index = Int(overlay.title!!)!
         
         let renderer = MKPolylineRenderer(overlay: overlay)
-
         renderer.strokeColor = Self.colors[index]
-
         renderer.lineWidth = 5.0
 
         return renderer
     }
+}
 
+// MARK: - First Screen
+
+extension MainViewController {
+    @IBAction private func ringDetailsTapped(_ sender: Any) {
+        scrollView.setContentOffset(.init(x: scrollView.bounds.width, y: 0), animated: true)
+    }
+}
+
+// MARK: - Stepper
+
+extension MainViewController {
+    private static let people = "people"
+    private static let person = "person"
+    
+    @IBAction private func stepperValueChanged(_ sender: UIStepper) {
+        let value = Int(sender.value)
+        
+        let peopleOrPerson = Self.peopleOrPerson(for: value)
+        
+        seatCountLabel.text = "\(value) \(peopleOrPerson)"
+    }
+        
+    private static func peopleOrPerson(for value: Int) -> String {
+        value == 1 ? people : person
+    }
+}
+
+// MARK: - Book
+
+extension MainViewController {
+    @IBAction private func bookTheRideTapped(_ sender: UIButton) {
+        sender.configuration?.showsActivityIndicator = true
+        sender.isEnabled = false
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            API.bookRide(request: .init(customerUserId: 2, startChauffeurRingNodeTimeId: 6, endChauffeurRingNodeTimeId: 10, seatCount: 1)) { result in
+                Threads.runOnMainThread {
+                    self.navigationController?.navigationBar.isHidden = true
+                    self.performSegue(withIdentifier: "successSegue", sender: self)
+                }
+            }
+        }
+    }
 }

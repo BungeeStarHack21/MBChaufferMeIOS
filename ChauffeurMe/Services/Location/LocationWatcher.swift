@@ -21,7 +21,7 @@ class LocationWatcher: NSObject {
     
     weak var delegate: LocationWatcherDelegate? {
         didSet {
-            locationManager.requestLocation()
+            fetch()
         }
     }
     
@@ -33,6 +33,10 @@ class LocationWatcher: NSObject {
     
     private override init() {
         
+    }
+    
+    func fetch() {
+        locationManager.requestLocation()
     }
     
     func ensurePermissionIsGranted() {

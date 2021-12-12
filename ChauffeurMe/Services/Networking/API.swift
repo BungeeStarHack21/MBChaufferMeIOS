@@ -8,7 +8,8 @@
 import Foundation
 
 enum API {
-    private static let baseURL = URL(string: "http://localhost:8083/rest")
+    private static let jsonEncoder = JSONEncoder()
+    private static let baseURL = URL(string: "http://172.20.10.6:8083/rest")
     
     static func findNearestRings(
         by latitude: Float,
@@ -24,6 +25,23 @@ enum API {
                 radius: radius
             )
         ) else {
+            completionHandler(.failure(APIError.failedToBuildHTTPRequest))
+            
+            return
+        }
+        
+        HTTP.doRequest(
+            httpRequest: httpRequest,
+            completionHandler: completionHandler
+        )
+    }
+    
+    static func bookRide(
+        request: BookRequest,
+        completionHandler:
+            @escaping HTTP.DoRequestCompletionHandler<BookResponse>
+    ) {
+        guard let httpRequest = httpRequest(for: .book(request: request), and: try? jsonEncoder.encode(request)) else {
             completionHandler(.failure(APIError.failedToBuildHTTPRequest))
             
             return
