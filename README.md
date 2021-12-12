@@ -19,7 +19,7 @@ This repository contains the iOS Application of Mercedes Benz: ChauffeurMe App.
 
 ## How to Run
 
-Clone the project and open the ChauffeurMe.xcproject file, then execute the CMD+R shortcut.
+Clone the project and open the `ChauffeurMe.xcproject` file, then execute the `CMD+R` shortcut.
 
 ## License
 
