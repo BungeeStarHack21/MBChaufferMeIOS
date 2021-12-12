@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MainViewController.swift
 //  ChauffeurMe
 //
 //  Created by Doğu Emre DEMİRÇİVİ on 12.12.2021.
@@ -8,7 +8,7 @@
 import UIKit
 import MapKit
 
-class ViewController: UIViewController {
+class MainViewController: UIViewController {
     @IBOutlet private weak var mapView: MKMapView!
     
     override func viewDidLoad() {
@@ -20,7 +20,7 @@ class ViewController: UIViewController {
 
 // MARK: - Map View
 
-extension ViewController {
+extension MainViewController {
     private func configureMapView() {
         
     }
